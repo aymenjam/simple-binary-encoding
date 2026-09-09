@@ -2,6 +2,11 @@
 
 == 1.41.0 (unreleased)
 
+* **[Java]** Add `setRaw()` method for Set type encoder. (https://github.com/aeron-io/simple-binary-encoding/pull/1122[#1122])
+* **[Rust]** Do not escape bit set choice names used in accessors. (https://github.com/aeron-io/simple-binary-encoding/pull/1121[#1121])
+* **[Rust]** Use the schema's `null` value when generating enums. (https://github.com/aeron-io/simple-binary-encoding/pull/1120[#1120])
+* **[C]** Upgrade to `CMake` 4.4.3.
+
 == 1.40.1 (2026-08-21)
 
 * **[Java]** Reject negative choice values in `SetType`. (https://github.com/aeron-io/simple-binary-encoding/pull/1112[#1112])
