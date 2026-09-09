@@ -383,6 +383,30 @@ class JavaGeneratorTest
     }
 
     @Test
+    void shouldGenerateBitSetRawAccessor() throws Exception
+    {
+        final UnsafeBuffer buffer = new UnsafeBuffer(new byte[4096]);
+
+        generator().generate();
+
+        final Object encoder = wrap(buffer, compileCarEncoder().getConstructor().newInstance());
+        final Object decoder = getCarDecoder(buffer, encoder);
+
+        final Object extrasEncoder = getExtras(encoder);
+        final Object extrasDecoder = getExtras(decoder);
+
+        final Method getRawMethod = extrasDecoder.getClass().getMethod("getRaw");
+        final Class<?> rawType = getRawMethod.getReturnType();
+        final Method setRawMethod = extrasEncoder.getClass().getMethod("setRaw", rawType);
+
+        final Short boxedValue = (short)0b0000_0101;
+        setRawMethod.invoke(extrasEncoder, boxedValue);
+
+        final Object result = getRawMethod.invoke(extrasDecoder);
+        assertEquals(boxedValue, result);
+    }
+
+    @Test
     void shouldGenerateEnumCodecs() throws Exception
     {
         final UnsafeBuffer buffer = new UnsafeBuffer(new byte[4096]);
