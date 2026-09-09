@@ -399,16 +399,11 @@ class JavaGeneratorTest
         final Class<?> rawType = getRawMethod.getReturnType();
         final Method setRawMethod = extrasEncoder.getClass().getMethod("setRaw", rawType);
 
-        final byte rawValue = (byte)0b0000_0101;
-        final Object boxedValue =
-                rawType == byte.class ? (Object)rawValue :
-                        rawType == short.class ? (Object)(short)rawValue :
-                                (Object)(int)rawValue;
-
+        final Short boxedValue = (short)0b0000_0101;
         setRawMethod.invoke(extrasEncoder, boxedValue);
 
         final Object result = getRawMethod.invoke(extrasDecoder);
-        assertEquals(rawValue, ((Number)result).byteValue());
+        assertEquals(boxedValue, result);
     }
 
     @Test
